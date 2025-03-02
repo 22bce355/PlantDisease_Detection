@@ -5,20 +5,29 @@ from tensorflow.keras.preprocessing import image
 import os
 import io
 import uuid
+import gdown
 from PIL import Image
 from flask_cors import CORS
 
 app = Flask(__name__, static_folder="static", template_folder="templates")
 CORS(app)  # Enable CORS for MERN frontend
 
-# Load the trained model
-model = tf.keras.models.load_model('PlantVillage.h5')
-
 UPLOAD_FOLDER = 'static/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
+
+MODEL_PATH = "PlantVillage.h5"
+GOOGLE_DRIVE_ID = "1-HPmegh4ef3bUfbxjcsAEwxRPl4jFdMA"  # Your Google Drive File ID
+
+# Download model if not available
+if not os.path.exists(MODEL_PATH):
+    print("Downloading model from Google Drive...")
+    gdown.download(f"https://drive.google.com/uc?id={GOOGLE_DRIVE_ID}", MODEL_PATH, quiet=False)
+
+# Load the trained model
+model = tf.keras.models.load_model(MODEL_PATH)
 
 class_info = {
     'Pepper__bell___Bacterial_spot': {'description': 'Bacterial spot is caused by Xanthomonas campestris.', 'precautions': 'Avoid overhead irrigation and use bactericides.'},
@@ -62,7 +71,6 @@ def upload_file():
         file.save(file_path)
 
         prediction, details = predict_disease(file_path)
-
         return render_template('index.html', prediction=prediction, details=details, img_path=file_path)
 
 # 🎯 Handle Camera Upload
@@ -80,7 +88,6 @@ def upload_camera():
         img.save(img_path)
 
         prediction, details = predict_disease(img_path)
-
         return render_template('index.html', prediction=prediction, details=details, img_path=img_path)
 
 # 🏃‍♂️ Run the app
