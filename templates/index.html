@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Disease Detection</title>
+    <link rel="stylesheet" href="static/index.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Plant Disease Detection</h1>
+
+        <!-- File Upload -->
+        <div class="upload-section">
+            <h3>Upload Plant Image</h3>
+            <form action="/" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept="image/*" required>
+                <button type="submit">Analyze Plant</button>
+            </form>
+            <div class="loading" id="uploadLoading">Analyzing plant health</div>
+        </div>
+
+        <hr>
+
+        <!-- Camera Capture -->
+        <div class="camera-section">
+            <h3>Take a Photo</h3>
+            <button id="openCamera">Use Camera</button>
+            <video id="video" width="320" height="240" autoplay style="display: none;"></video>
+            <canvas id="canvas" width="320" height="240" style="display: none;"></canvas>
+            <div class="camera-controls">
+                <button id="capture" style="display: none;">Capture Photo</button>
+                <button id="upload" style="display: none;">Analyze Photo</button>
+            </div>
+            <div class="loading" id="cameraLoading">Analyzing plant health</div>
+        </div>
+
+        <hr>
+
+        <!-- Display Prediction -->
+        {% if img_path %}
+        <div class="results-section {% if 'healthy' in prediction %}healthy{% endif %}">
+            <h2>Analysis Results</h2>
+            <div class="prediction-details">
+                <h3>Predicted: {{ prediction.replace('_', ' ').replace('__', ': ') }}</h3>
+                <p>{{ details.description }}</p>
+                <div class="precautions">
+                    <strong>Recommended Actions:</strong> 
+                    <p>{{ details.precautions }}</p>
+                </div>
+            </div>
+            <img src="{{ img_path }}" alt="Analyzed plant image">
+        </div>
+        {% endif %}
+
+        <div class="footer">
+            <p>Plant Disease Detection helps gardeners identify and treat plant health issues</p>
+        </div>
+    </div>
+
+    <script>
+        const openCameraBtn = document.getElementById("openCamera");
+        const video = document.getElementById("video");
+        const canvas = document.getElementById("canvas");
+        const captureBtn = document.getElementById("capture");
+        const uploadBtn = document.getElementById("upload");
+        const uploadLoading = document.getElementById("uploadLoading");
+        const cameraLoading = document.getElementById("cameraLoading");
+
+        let stream;
+
+        openCameraBtn.addEventListener("click", async () => {
+            stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            video.srcObject = stream;
+            video.style.display = "block";
+            captureBtn.style.display = "block";
+            openCameraBtn.style.display = "none";
+        });
+
+        captureBtn.addEventListener("click", () => {
+            const context = canvas.getContext("2d");
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            video.style.display = "none";
+            captureBtn.style.display = "none";
+            uploadBtn.style.display = "block";
+            canvas.style.display = "block";
+            stream.getTracks().forEach(track => track.stop());
+        });
+
+        uploadBtn.addEventListener("click", async () => {
+            cameraLoading.style.display = "block";
+            uploadBtn.disabled = true;
+            
+            canvas.toBlob(async (blob) => {
+                const formData = new FormData();
+                formData.append("file", blob, "captured_image.jpg");
+
+                const response = await fetch("/upload_camera", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const data = await response.text();
+                document.body.innerHTML = data;
+            }, "image/jpeg");
+        });
+
+        // Add loading indicator for file upload form
+        document.querySelector('form').addEventListener('submit', function() {
+            uploadLoading.style.display = "block";
+            this.querySelector('button').disabled = true;
+        });
+    </script>
+</body>
+</html>

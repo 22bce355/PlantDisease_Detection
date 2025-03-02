@@ -1,0 +1,412 @@
+/* Plant Disease Detection Themed CSS */
+/* Color Variables */
+:root {
+  --leaf-green: #4CAF50;
+  --forest-green: #2E7D32;
+  --dark-soil: #3E2723;
+  --light-soil: #795548;
+  --parchment: #F5F5DC;
+  --sunlight: #FFF9C4;
+  --tomato-red: #E53935;
+  --healthy-green: #81C784;
+  --water-blue: #64B5F6;
+  --shadow: rgba(0, 0, 0, 0.15);
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--parchment);
+  color: var(--dark-soil);
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  background-image: url("data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23606700' fill-opacity='0.05'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.container {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  box-shadow: 0 5px 15px var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: linear-gradient(90deg, var(--leaf-green), var(--forest-green), var(--healthy-green));
+  border-radius: 15px 15px 0 0;
+}
+
+h1 {
+  color: var(--forest-green);
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  position: relative;
+}
+
+h1::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--leaf-green), transparent);
+}
+
+h1::before {
+  content: "🌱";
+  display: block;
+  font-size: 2rem;
+  margin-bottom: 5px;
+}
+
+h2 {
+  color: var(--forest-green);
+  font-size: 1.8rem;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+}
+
+h2::before {
+  content: "🔍";
+  margin-right: 10px;
+}
+
+h3 {
+  color: var(--forest-green);
+  display: flex;
+  align-items: center;
+}
+
+.upload-section h3::before {
+  content: "📷";
+  margin-right: 10px;
+}
+
+.camera-section h3::before {
+  content: "📱";
+  margin-right: 10px;
+}
+
+hr {
+  border: none;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--light-soil), transparent);
+  margin: 25px 0;
+}
+
+/* Upload Form Section */
+.upload-section {
+  background-color: var(--sunlight);
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px var(--shadow);
+  margin-bottom: 30px;
+  position: relative;
+  overflow: hidden;
+}
+
+.upload-section::after {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  width: 80px;
+  height: 80px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234CAF50' opacity='0.2'%3E%3Cpath d='M12,3c0,0-6.186,5.34-9.643,8.232C2.154,11.416,2,11.684,2,12c0,0.553,0.447,1,1,1h2v7c0,0.553,0.447,1,1,1h3c0.553,0,1-0.447,1-1v-4h4v4c0,0.553,0.447,1,1,1h3c0.553,0,1-0.447,1-1v-7h2c0.553,0,1-0.447,1-1c0-0.316-0.154-0.584-0.383-0.768C18.184,8.34,12,3,12,3z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  opacity: 0.2;
+  transform: rotate(15deg);
+}
+
+/* File Upload */
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  position: relative;
+  z-index: 1;
+}
+
+input[type="file"] {
+  width: 100%;
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+  border: 2px dashed var(--leaf-green);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+input[type="file"]:hover {
+  border-color: var(--forest-green);
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+input[type="file"]::file-selector-button {
+  background-color: var(--leaf-green);
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background-color: var(--forest-green);
+}
+
+/* Buttons */
+button {
+  background-color: var(--leaf-green);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 5px var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: all 0.5s ease;
+}
+
+button:hover {
+  background-color: var(--forest-green);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--shadow);
+}
+
+button:hover::after {
+  left: 100%;
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* Camera Section */
+.camera-section {
+  background-color: var(--sunlight);
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px var(--shadow);
+  margin-bottom: 30px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.camera-section::after {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 80px;
+  height: 80px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234CAF50' opacity='0.2'%3E%3Cpath d='M12,2L4.5,20.29l0.71,0.71L12,18l6.79,3l0.71-0.71L12,2z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  opacity: 0.2;
+  transform: rotate(-15deg);
+}
+
+video, canvas {
+  border: 3px solid var(--leaf-green);
+  border-radius: 8px;
+  margin: 15px auto;
+  max-width: 100%;
+  box-shadow: 0 4px 8px var(--shadow);
+}
+
+/* Camera Controls */
+.camera-controls {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+#capture {
+  background-color: var(--water-blue);
+}
+
+#capture:hover {
+  background-color: #1976D2;
+}
+
+/* Results Section */
+.results-section {
+  background-color: var(--sunlight);
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px var(--shadow);
+  position: relative;
+}
+
+.results-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234CAF50' opacity='0.1'%3E%3Cpath d='M12,22c4.97,0,9-4.03,9-9c-4.97,0-9,4.03-9,9c0,4.97,4.03,9,9,9C16.97,13,12.94,9,12,9C7.03,9,3,13.03,3,18c0-4.97,4.03-9,9-9c-4.97,0-9,4.03-9,9C3,12.03,7.03,8,12,8c4.97,0,9,4.03,9,9C21,12.03,16.97,8,12,8'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  opacity: 0.1;
+}
+
+.results-section img {
+  display: block;
+  margin: 20px auto;
+  border: 3px solid var(--leaf-green);
+  border-radius: 8px;
+  max-width: 100%;
+  box-shadow: 0 4px 8px var(--shadow);
+}
+
+.prediction-details {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 5px solid var(--leaf-green);
+  margin-top: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.prediction-details h3 {
+  color: var(--forest-green);
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+}
+
+.prediction-details h3::before {
+  content: "🌿";
+  margin-right: 10px;
+}
+
+.prediction-details p {
+  margin: 10px 0;
+  line-height: 1.6;
+}
+
+.precautions {
+  background-color: rgba(76, 175, 80, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 15px;
+  border-left: 3px solid var(--tomato-red);
+}
+
+.precautions strong {
+  color: var(--tomato-red);
+  display: flex;
+  align-items: center;
+}
+
+.precautions strong::before {
+  content: "⚠️";
+  margin-right: 5px;
+}
+
+/* Healthy vs. Diseased Indicators */
+[class*="healthy"] .prediction-details {
+  border-left-color: var(--healthy-green);
+}
+
+[class*="healthy"] .prediction-details h3::before {
+  content: "✅";
+}
+
+[class*="blight"] .prediction-details,
+[class*="spot"] .prediction-details {
+  border-left-color: var(--tomato-red);
+}
+
+[class*="blight"] .prediction-details h3::before,
+[class*="spot"] .prediction-details h3::before {
+  content: "🔴";
+}
+
+/* Loading Animation */
+.loading {
+  display: none;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.loading::after {
+  content: "🌱";
+  display: inline-block;
+  animation: grow 1.5s infinite ease-in-out;
+}
+
+@keyframes grow {
+  0% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.5); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.5; }
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--leaf-green);
+  opacity: 0.7;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    margin: 15px;
+    padding: 20px;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+  
+  .upload-section, .camera-section, .results-section {
+    padding: 15px;
+  }
+  
+  button {
+    padding: 10px 20px;
+  }
+}
